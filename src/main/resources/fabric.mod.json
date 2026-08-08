@@ -1,0 +1,48 @@
+{
+	"schemaVersion": 1,
+	"id": "player-radar-mod",
+	"version": "${version}",
+	"name": "Player Radar Mod",
+	"description": "Shows vanilla Locator Bar player locations as JourneyMap overlays outside entity tracking range.",
+	"authors": [
+		"Quantum8060"
+	],
+	"contact": {
+		"homepage": "",
+		"sources": "https://github.com/Quantum8060/PlayerRadarMod"
+	},
+	"license": "MIT",
+	"icon": "assets/player-radar-mod/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"main": [
+			"xyz.qmc.PlayerRadarMod"
+		],
+		"client": [
+			"xyz.qmc.client.PlayerRadarModClient"
+		],
+		"journeymap": [
+			"xyz.qmc.client.journeymap.PlayerRadarJourneyMapPlugin"
+		],
+		"modmenu": [
+			"xyz.qmc.client.PlayerRadarModMenu"
+		]
+	},
+	"mixins": [
+		{
+			"config": "player-radar-mod.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~1.21.11",
+		"java": ">=21",
+		"fabric-api": "*",
+		"yet_another_config_lib_v3": ">=3.8.2"
+	},
+	"suggests": {
+		"journeymap": ">=6.0.0",
+		"modmenu": "*"
+	}
+}
