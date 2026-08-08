@@ -1,14 +1,14 @@
 # Player Radar Mod
 
-Minecraft 1.21.11 のLocator Barでクライアントが受信した他プレイヤーの位置を、JourneyMapのマーカーオーバーレイとして表示するFabricクライアントMODです。
+Minecraft 26.2 のLocator Barでクライアントが受信した他プレイヤーの位置を、JourneyMapのマーカーオーバーレイとして表示するFabricクライアントMODです。
 
 ## 必要環境
 
-- Minecraft 1.21.11
+- Minecraft 26.2
 - Fabric Loader 0.19.3 以降
-- Fabric API 0.141.6+1.21.11 以降
+- Fabric API 0.156.0+26.2 以降
 - JourneyMap 6.0 API v2 対応版（Fabric）
-- YetAnotherConfigLib v3（YACL）3.8.2+1.21.11-fabric 以降
+- YetAnotherConfigLib v3（YACL）3.9.6+26.2-fabric 以降
 - Mod Menu（任意。ゲーム内設定画面を使用する場合）
 
 このMODはクライアント専用です。サーバーへの導入は不要です。
@@ -22,9 +22,9 @@ Minecraft 1.21.11 のLocator Barでクライアントが受信した他プレイ
 
 ## 設定
 
-Mod Menu を導入している場合、Mod Menu の **Player Radar Mod** → **設定** から `Show Locator Bar players` を切り替えられます。設定の適用時にJourneyMap上の表示へ反映されます。
+Mod Menu の **Player Radar Mod** → **設定** から `Show Locator Bar players` を切り替えられます。
 
-設定ファイルは `config/player-radar-mod.json` に保存されます。Mod Menu を使用しない場合も、ゲームを終了してから次の内容を作成・編集することで切り替えられます。
+設定は `config/player-radar-mod.json` に保存されます。Mod Menu を使用しない場合も、ゲームを終了してから次の内容を作成・編集することで切り替えられます。
 
 ```json
 {

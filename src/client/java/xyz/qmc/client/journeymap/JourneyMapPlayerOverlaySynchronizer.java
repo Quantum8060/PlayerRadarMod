@@ -19,9 +19,9 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-/** Maintains only the far-away half of the Player Radar / Locator Bar handoff. */
+/** Maintains the far-away half of the Player Radar / Locator Bar handoff. */
 final class JourneyMapPlayerOverlaySynchronizer implements Consumer<Map<UUID, LocatorPlayer>> {
-	private static final Identifier PLAYER_ICON = Identifier.fromNamespaceAndPath("player-radar-mod", "images/player_marker.png");
+	private static final Identifier PLAYER_ICON = Identifier.fromNamespaceAndPath(PlayerRadarMod.MOD_ID, "images/player_marker.png");
 	private static final long STANDARD_RADAR_GRACE_PERIOD_MILLIS = 1_500L;
 	private static final long OVERLAY_REFRESH_INTERVAL_MILLIS = 1_000L;
 	private final IClientAPI api;
@@ -36,27 +36,18 @@ final class JourneyMapPlayerOverlaySynchronizer implements Consumer<Map<UUID, Lo
 
 	@Override
 	public void accept(Map<UUID, LocatorPlayer> players) {
-		if (!PlayerRadarConfig.overlayEnabled()) {
-			removeAll();
-			return;
-		}
-
-		if (!api.playerAccepts(PlayerRadarMod.MOD_ID, DisplayType.Marker)) {
+		if (!PlayerRadarConfig.overlayEnabled() || !api.playerAccepts(PlayerRadarMod.MOD_ID, DisplayType.Marker)) {
 			removeAll();
 			return;
 		}
 
 		long now = System.currentTimeMillis();
 		boolean forceRefresh = now - lastOverlayRefreshMillis >= OVERLAY_REFRESH_INTERVAL_MILLIS;
-		if (forceRefresh) {
-			lastOverlayRefreshMillis = now;
-		}
+		if (forceRefresh) lastOverlayRefreshMillis = now;
 
 		Set<UUID> active = new HashSet<>();
 		for (LocatorPlayer player : players.values()) {
-			if (isShownByStandardRadar(player.uuid())) {
-				continue;
-			}
+			if (isShownByStandardRadar(player.uuid())) continue;
 			active.add(player.uuid());
 			showOrMove(player, forceRefresh);
 		}
@@ -79,12 +70,8 @@ final class JourneyMapPlayerOverlaySynchronizer implements Consumer<Map<UUID, Lo
 
 	private boolean isShownByStandardRadar(UUID uuid) {
 		Long lastSeen = standardRadarLastSeen.get(uuid);
-		if (lastSeen == null) {
-			return false;
-		}
-		if (System.currentTimeMillis() - lastSeen <= STANDARD_RADAR_GRACE_PERIOD_MILLIS) {
-			return true;
-		}
+		if (lastSeen == null) return false;
+		if (System.currentTimeMillis() - lastSeen <= STANDARD_RADAR_GRACE_PERIOD_MILLIS) return true;
 		standardRadarLastSeen.remove(uuid);
 		return false;
 	}
@@ -100,9 +87,7 @@ final class JourneyMapPlayerOverlaySynchronizer implements Consumer<Map<UUID, Lo
 			MapImage image = new MapImage(PLAYER_ICON, 0, 0, 16, 16, colorFor(player.uuid()), 1.0F);
 			image.centerAnchors();
 			overlay = new MarkerOverlay(PlayerRadarMod.MOD_ID, player.position(), image);
-			overlay.setDimension(player.dimension())
-				.setTitle("Locator Bar player")
-				.setLabel(player.displayName());
+			overlay.setDimension(player.dimension()).setTitle("Locator Bar player").setLabel(player.displayName());
 			overlays.put(player.uuid(), overlay);
 		} else {
 			overlay.setPoint(player.position());
@@ -116,15 +101,11 @@ final class JourneyMapPlayerOverlaySynchronizer implements Consumer<Map<UUID, Lo
 	}
 
 	private void removeAll() {
-		for (MarkerOverlay overlay : overlays.values()) {
-			api.remove(overlay);
-		}
+		for (MarkerOverlay overlay : overlays.values()) api.remove(overlay);
 		overlays.clear();
 	}
 
 	private static int colorFor(UUID uuid) {
-		int hash = uuid.hashCode();
-		return 0xFF000000 | (hash & 0x00FFFFFF);
+		return 0xFF000000 | (uuid.hashCode() & 0x00FFFFFF);
 	}
-
 }

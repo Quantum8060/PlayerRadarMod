@@ -6,7 +6,7 @@ import journeymap.api.v2.common.JourneyMapPlugin;
 import xyz.qmc.PlayerRadarMod;
 import xyz.qmc.client.LocatorPlayerTracker;
 
-/** JourneyMap's soft-dependency entrypoint. */
+/** JourneyMap soft-dependency entrypoint. */
 @JourneyMapPlugin(apiVersion = "2.0.0")
 public final class PlayerRadarJourneyMapPlugin implements IClientPlugin {
 	@Override

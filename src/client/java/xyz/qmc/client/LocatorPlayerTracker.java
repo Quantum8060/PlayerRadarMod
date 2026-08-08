@@ -20,10 +20,7 @@ import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
-/**
- * Converts the positions already received by the vanilla Locator Bar into a
- * small, client-only snapshot. No packets are inspected or modified.
- */
+/** Converts positions received by the vanilla Locator Bar into client-only snapshots. */
 public final class LocatorPlayerTracker {
 	private static final CopyOnWriteArrayList<Consumer<Map<UUID, LocatorPlayer>>> LISTENERS = new CopyOnWriteArrayList<>();
 	private static final Map<UUID, CachedPosition> LAST_KNOWN_POSITIONS = new HashMap<>();
@@ -61,17 +58,14 @@ public final class LocatorPlayerTracker {
 				if (blockPos == null) {
 					CachedPosition cachedPosition = LAST_KNOWN_POSITIONS.get(uuid);
 					if (cachedPosition == null) {
-						PlayerRadarMod.LOGGER.debug("Locator Bar waypoint for {} has no map position: {}", uuid, waypoint.getClass().getSimpleName());
 						return;
 					}
 					blockPos = cachedPosition.position();
 				} else {
 					LAST_KNOWN_POSITIONS.put(uuid, new CachedPosition(blockPos, minecraft.level.dimension()));
 				}
-				// When the entity is loaded, JourneyMap's own Player Radar owns its rendering.
-				boolean entityLoaded = minecraft.level.getPlayerByUUID(uuid) != null;
 				CachedPosition position = LAST_KNOWN_POSITIONS.get(uuid);
-				snapshot.put(uuid, new LocatorPlayer(uuid, blockPos, entityLoaded, position.dimension(), displayName(minecraft, uuid)));
+				snapshot.put(uuid, new LocatorPlayer(uuid, blockPos, position.dimension(), displayName(minecraft, uuid)));
 			});
 		});
 		LAST_KNOWN_POSITIONS.keySet().retainAll(activeWaypointIds);
@@ -108,7 +102,7 @@ public final class LocatorPlayerTracker {
 		}
 	}
 
-	public record LocatorPlayer(UUID uuid, BlockPos position, boolean entityLoaded, ResourceKey<Level> dimension, String displayName) {
+	public record LocatorPlayer(UUID uuid, BlockPos position, ResourceKey<Level> dimension, String displayName) {
 	}
 
 	private record CachedPosition(BlockPos position, ResourceKey<Level> dimension) {
