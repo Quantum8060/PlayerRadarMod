@@ -12,12 +12,9 @@
 		"sources": "https://github.com/Quantum8060/PlayerRadarMod"
 	},
 	"license": "MIT",
-	"icon": "assets/player-radar-mod/icon.png",
+	"icon": "assets/player-radar-mod/player-radar-icon.png",
 	"environment": "client",
 	"entrypoints": {
-		"main": [
-			"xyz.qmc.PlayerRadarMod"
-		],
 		"client": [
 			"xyz.qmc.client.PlayerRadarModClient"
 		],
@@ -39,7 +36,7 @@
 		"minecraft": "~1.21.11",
 		"java": ">=21",
 		"fabric-api": "*",
-		"yet_another_config_lib_v3": ">=3.8.2"
+		"qolib": ">=1.0.0"
 	},
 	"suggests": {
 		"journeymap": ">=6.0.0",

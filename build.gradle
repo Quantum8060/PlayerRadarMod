@@ -3,11 +3,15 @@ plugins {
 	id 'maven-publish'
 }
 
-version = project.mod_version
+version = "${project.mod_version}+${project.minecraft_version}"
 group = project.maven_group
 
+base {
+	archivesName = "PlayerRader"
+}
+
 repositories {
-	maven { url = "https://maven.isxander.dev/releases" }
+	mavenLocal()
 	maven { url = "https://maven.terraformersmc.com/releases" }
 	maven {
 		name = "JourneyMap Maven"
@@ -37,7 +41,7 @@ dependencies {
 
 	// JourneyMap is a soft runtime dependency. The API must never be bundled in this mod.
 	modCompileOnlyApi "info.journeymap:journeymap-api-fabric:${project.journeymap_api_version}"
-	modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
+	modImplementation "xyz.qmc.qolib:qolib:${project.qolib_version}"
 	modCompileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
 }
 
