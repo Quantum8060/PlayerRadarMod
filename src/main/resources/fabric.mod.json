@@ -12,7 +12,7 @@
 		"sources": "https://github.com/Quantum8060/PlayerRadarMod"
 	},
 	"license": "MIT",
-	"icon": "assets/player-radar-mod/icon.png",
+	"icon": "assets/player-radar-mod/icon.jpg",
 	"environment": "client",
 	"entrypoints": {
 		"main": [
