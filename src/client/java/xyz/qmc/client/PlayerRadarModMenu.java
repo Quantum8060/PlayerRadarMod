@@ -2,7 +2,7 @@ package xyz.qmc.client;
 
 import com.terraformersmc.modmenu.api.ModMenuApi;
 
-/** Supplies Player Radar Mod's YACL screen to Mod Menu when it is installed. */
+/** Supplies Player Radar Mod's QoLib screen to Mod Menu when it is installed. */
 public final class PlayerRadarModMenu implements ModMenuApi {
 	@Override
 	public com.terraformersmc.modmenu.api.ConfigScreenFactory<?> getModConfigScreenFactory() {

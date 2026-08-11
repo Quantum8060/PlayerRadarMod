@@ -39,7 +39,7 @@
 		"minecraft": "~26.2",
 		"java": ">=25",
 		"fabric-api": "*",
-		"yet_another_config_lib_v3": ">=3.9.6"
+		"qolib": ">=1.0.0"
 	},
 	"suggests": {
 		"journeymap": ">=6.0.0",
